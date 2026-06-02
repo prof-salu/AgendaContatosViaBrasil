@@ -17,7 +17,7 @@ public class Contato {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Endereco> enderecos = new ArrayList();
 
     public Contato() {

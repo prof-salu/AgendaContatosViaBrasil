@@ -6,6 +6,7 @@ import jakarta.persistence.Persistence;
 
 public class TesteJPA {
     public static void main(String[] args) {
+        //DAO --> Data Acess Object
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AgendaPU");
 
