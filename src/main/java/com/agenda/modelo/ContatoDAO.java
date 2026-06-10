@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContatoDAO {
@@ -40,5 +39,38 @@ public class ContatoDAO {
         em.close();//Fecha a conexao com EntityManager
 
         return lista;
+    }
+
+    public void apagar(long id){
+        try{
+            Contato contato = em.find(Contato.class, id);
+            if(contato != null){
+                em.getTransaction().begin();
+                em.remove(contato);
+                em.getTransaction().commit();
+                System.out.println("Contato apagado com sucesso!");
+            }else{
+                System.out.println("Contato não encontrado");
+            }
+        }catch(Exception e){
+            em.getTransaction().rollback();
+            System.out.println("Erro ao apagar: " + e);
+        }finally{
+            em.close();
+        }
+    }
+
+    public void editar(Contato contato){
+        try{
+            em.getTransaction().begin();
+            em.merge(contato);
+            em.getTransaction().commit();
+            System.out.println("Contato editado com sucesso!");
+        }catch(Exception e){
+            em.getTransaction().rollback();
+            System.out.println("Falha ao editar: " + e);
+        }finally{
+            em.close();
+        }
     }
 }
